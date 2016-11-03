@@ -1,0 +1,41 @@
+{
+  "name": "boletinho-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-integration": "mocha --opts test/integration/mocha.opts test/integration/**/*.js",
+    "test-integration-students": "mocha --opts test/integration/mocha.opts test/integration/routes/students.js",
+    "test-integration-users": "mocha --opts test/integration/mocha.opts test/integration/routes/users.js",
+    "test-integration-disciplines": "mocha --opts test/integration/mocha.opts test/integration/routes/disciplines.js",
+    "test-integration-registrations": "mocha --opts test/integration/mocha.opts test/integration/routes/registrations.js",
+    "test-integration-courses": "mocha --opts test/integration/mocha.opts test/integration/routes/courses.js",
+    "lint": "node_modules\\.bin\\eslint **/*.js",
+    "lint:fix": "node_modules\\.bin\\eslint **/*.js --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.9.0",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1",
+    "mocha": "^3.1.2",
+    "supertest": "^2.0.1"
+  },
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "body-parser": "^1.15.2",
+    "bookshelf": "^0.10.2",
+    "express": "^4.14.0",
+    "knex": "^0.12.6",
+    "pg": "^6.1.0"
+  }
+}
