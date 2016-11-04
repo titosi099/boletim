@@ -1,36 +1,47 @@
 import Users from '../models/Users';
+import UsersController from '../controllers/users';
 
 export default (app) => {
+  const usersController = new UsersController(Users);
+
   app.route('/users')
   .get((req, res) => {
-    Users
-    .fetchAll({ withRelated: 'attribute' })
-    .then(users => res.json(users));
+    usersController.getAll()
+    .then((response) => {
+      res.status(response.statusCode);
+      res.json(response.data);
+    })
+    .catch(response => res.status(response.statusCode));
   })
   .post((req, res) => {
-    Users
-    .forge()
-    .save(req.body, { method: 'insert' })
-    .then(response => res.json(response));
+    usersController.create(req.body)
+    .then((response) => {
+      res.status(response.statusCode);
+      res.json(response.data);
+    })
+    .catch(response => res.status(response.statusCode));
   });
 
   app.route('/users/:id')
   .get((req, res) => {
-    Users
-    .where({ id: req.params.id })
-    .fetch({ withRelated: 'attribute' })
-    .then(user => res.json(user));
+    usersController.getById(req.params.id)
+    .then((response) => {
+      res.status(response.statusCode);
+      res.json(response.data);
+    })
+    .catch(response => res.status(response.statusCode));
   })
   .put((req, res) => {
-    Users
-    .forge()
-    .save(req.body, { method: 'update' })
-    .then(response => res.json(response));
+    usersController.update(req.params.id, req.body)
+    .then((response) => {
+      res.status(response.statusCode);
+      res.json(response.data);
+    })
+    .catch(response => res.status(response.statusCode));
   })
   .delete((req, res) => {
-    Users
-    .where({ id: req.params.id })
-    .destroy()
-    .then(response => res.json(response));
+    usersController.delete(req.params.id)
+    .then(response => res.sendStatus(response.statusCode))
+    .catch(response => res.status(response.statusCode));
   });
 };
