@@ -1,10 +1,13 @@
+import jwt from 'jwt-simple';
 import Registrations from '../../../models/Registrations';
 import Students from '../../../models/Students';
 import Courses from '../../../models/Courses';
 
 describe('Routes /registrations', () => {
+  const jwtSecret = app.config.jwtSecret;
+  const token = jwt.encode({ id: 1 }, jwtSecret);
   const student = { id: 1, name: 'Eliton' };
-  const course = { id: 1, name: 'SI' };
+  const course = { id: 1, name: 'SI SI' };
   const defaultRegistration = {
     id: 100000,
     students_id: 1,
@@ -59,6 +62,7 @@ describe('Routes /registrations', () => {
     it('Should return a list of registrations', (done) => {
       request
       .get('/registrations')
+      .set('Authorization', `JWT ${token}`)
       .end((err, res) => {
         expect(res.body[0].id).to.be.eql(defaultRegistration.id);
         expect(res.body[0].students_id).to.be.eql(defaultRegistration.students_id);
@@ -72,6 +76,7 @@ describe('Routes /registrations', () => {
     it('Should return a registration', (done) => {
       request
       .get('/registrations/100000')
+      .set('Authorization', `JWT ${token}`)
       .end((err, res) => {
         expect(res.body.id).to.be.eql(defaultRegistration.id);
         expect(res.body.students_id).to.be.eql(defaultRegistration.students_id);
@@ -85,6 +90,7 @@ describe('Routes /registrations', () => {
     it('Should create a registration', (done) => {
       request
       .post('/registrations')
+      .set('Authorization', `JWT ${token}`)
       .send(newRegistration)
       .end((err, res) => {
         expect(res.body.id).to.be.eql(newRegistration.id);
@@ -99,6 +105,7 @@ describe('Routes /registrations', () => {
     it('Should create a registration', (done) => {
       request
       .put('/registrations/100000')
+      .set('Authorization', `JWT ${token}`)
       .send(updateRegistration)
       .end((err, res) => {
         expect(res.body.observation).to.be.eql(updateRegistration.observation);
@@ -110,6 +117,7 @@ describe('Routes /registrations', () => {
     it('Should delete a registration', (done) => {
       request
       .delete('/registrations/100000')
+      .set('Authorization', `JWT ${token}`)
       .send()
       .end((err, res) => {
         expect(res.body).to.be.eql({});

@@ -12,4 +12,6 @@ export default {
     min: 0,
     max: 7,
   },
+  jwtSecret: 'JWTS3CR3T',
+  jwtSession: { session: false },
 };

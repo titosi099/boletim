@@ -2,6 +2,7 @@ import Students from '../models/Students';
 
 export default (app) => {
   app.route('/students')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     Students
     .fetchAll()
@@ -15,6 +16,7 @@ export default (app) => {
   });
 
   app.route('/students/:id')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     Students
     .where({ id: req.params.id })

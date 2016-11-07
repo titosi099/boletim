@@ -1,6 +1,9 @@
+import jwt from 'jwt-simple';
 import Disciplines from '../../../models/Disciplines';
 
 describe('Routes Disciplines', () => {
+  const jwtSecret = app.config.jwtSecret;
+  let token = jwt.encode({ id: 1 }, jwtSecret);
   const defaultDiscipline = {
     id: 1,
     name: 'Programação I',
@@ -35,6 +38,7 @@ describe('Routes Disciplines', () => {
     it('Should return a list of disciplines', (done) => {
       request
       .get('/disciplines')
+      .set('Authorization', `JWT ${token}`)
       .end((err, res) => {
         expect(res.body[0].id).to.be.eql(defaultDiscipline.id);
         expect(res.body[0].name).to.be.eql(defaultDiscipline.name);
@@ -46,6 +50,7 @@ describe('Routes Disciplines', () => {
     it('Should return a discipline', (done) => {
       request
       .get('/disciplines/1')
+      .set('Authorization', `JWT ${token}`)
       .end((err, res) => {
         expect(res.body.id).to.be.eql(defaultDiscipline.id);
         expect(res.body.name).to.be.eql(defaultDiscipline.name);
@@ -57,6 +62,7 @@ describe('Routes Disciplines', () => {
     it('Should create a discipline', (done) => {
       request
       .post('/disciplines')
+      .set('Authorization', `JWT ${token}`)
       .send(newDiscipline)
       .end((err, res) => {
         expect(res.body.name).to.be.eql(newDiscipline.name);
@@ -68,6 +74,7 @@ describe('Routes Disciplines', () => {
     it('Should update a discipline', (done) => {
       request
       .put('/disciplines/1')
+      .set('Authorization', `JWT ${token}`)
       .send(updateDiscipline)
       .end((err, res) => {
         expect(res.body.name).to.be.eql(updateDiscipline.name);
@@ -79,6 +86,7 @@ describe('Routes Disciplines', () => {
     it('Should delete a discipline', (done) => {
       request
       .delete('/disciplines/1')
+      .set('Authorization', `JWT ${token}`)
       .send()
       .end((err, res) => {
         expect(res.body).to.be.eql({});

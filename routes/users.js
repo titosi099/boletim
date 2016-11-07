@@ -5,6 +5,7 @@ export default (app) => {
   const usersController = new UsersController(Users);
 
   app.route('/users')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     usersController.getAll()
     .then((response) => {
@@ -23,6 +24,7 @@ export default (app) => {
   });
 
   app.route('/users/:id')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     usersController.getById(req.params.id)
     .then((response) => {

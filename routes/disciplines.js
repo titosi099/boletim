@@ -2,6 +2,7 @@ import Disciplines from '../models/Disciplines';
 
 export default (app) => {
   app.route('/disciplines')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     Disciplines
     .fetchAll({ withRelated: 'teacher' })
@@ -15,6 +16,7 @@ export default (app) => {
   });
 
   app.route('/disciplines/:id')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     Disciplines
     .where({ id: req.params.id })

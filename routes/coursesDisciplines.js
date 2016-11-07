@@ -2,6 +2,7 @@ import CoursesDisciplines from '../models/Courses_Disciplines';
 
 export default (app) => {
   app.route('/courses_disciplines')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     CoursesDisciplines
     .fetchAll({ debug: true })

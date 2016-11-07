@@ -2,6 +2,7 @@ import Registrations from '../models/Registrations';
 
 export default (app) => {
   app.route('/registrations')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     Registrations
     .fetchAll({ withRelated: ['student', 'course'] })
@@ -15,6 +16,7 @@ export default (app) => {
   });
 
   app.route('/registrations/:id')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     Registrations
     .where({ id: req.params.id })

@@ -2,6 +2,7 @@ import Courses from '../models/Courses';
 
 export default (app) => {
   app.route('/courses')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     Courses
     .fetchAll({ withRelated: ['discipline'] })
@@ -14,6 +15,7 @@ export default (app) => {
     .then(response => res.json(response));
   });
   app.route('/courses/:id')
+  .all(app.auth.authenticate())
   .get((req, res) => {
     Courses
     .where({ id: req.params.id })
